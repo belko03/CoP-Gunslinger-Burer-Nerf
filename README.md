@@ -7,8 +7,9 @@ This script addresses common community frustration by fundamentally reworking th
 
 Prerequisites
 
-• Official "Weakened Burers" Option: You must have the official "Weakened Burers" (weakened_burer) option checked and enabled inside the game's launcher (CheckUpdates.exe). This script builds upon that layout to ensure compatibility and dynamic execution.
-• It is highly recommended to create a backup copy of your existing gamedata folder or related game scripts before applying these changes.
+Official "Weakened Burers" Option: You must have the official "Weakened Burers" (weakened_burer) option checked and enabled inside the game's launcher (CheckUpdates.exe). This script builds upon that layout to ensure compatibility and dynamic execution.
+
+It is highly recommended to create a backup copy of your existing gamedata folder or related game scripts before applying these changes.
 
 Installation / Override Method
 
