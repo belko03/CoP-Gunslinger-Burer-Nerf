@@ -19,6 +19,6 @@ Since the Gunslinger launcher utilizes an integrity check tracking file sizes an
 $game_ata$ = true| true| $fs_root$| gamedata
 Use code with caution.
 3. Inside the main directory, navigate to a folder named gamedata, then find a subfolder named scripts.
-	• Target Path: .../Gunslinger/gamedata/scripts/
+Target Path: .../Gunslinger/gamedata/scripts/
 4. Place the modified gunsl_burer.script file into that folder.
 5. Launch the game normally via the standard executable or launcher. The X-Ray engine will dynamically read the modified script from the external directory with high priority, leaving the original .db archives unmodified and avoiding file verification crashes.
