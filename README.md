@@ -14,7 +14,7 @@ Installation / Override Method
 
 Since the Gunslinger launcher utilizes an integrity check tracking file sizes and CRC32 checksums of .db archives, this tweak uses the standard Gamedata Override approach to bypass static system file validation safely.
 1. Navigate to your main Gunslinger Mod installation folder.
-2. Locate the fsgame.ltx file, open it with a text editor, and ensure the $game_data$ flag is enabled by setting it to true| true:text
+2. Locate the fsgame.ltx file, open it with a text editor, and ensure the $game_data$ flag is enabled by setting it to true| 
 $game_data$ = true| true| $fs_root$| gamedata\
 Use code with caution.
 3. Inside the main directory, create a new folder named gamedata (if you do not have one already), then create a subfolder named scripts.
