@@ -1,0 +1,90 @@
+function print_to_log(str)
+	get_console():execute("load gunsl_burer_"..str)
+end
+
+local cam_anim_active = false
+local anm_id = 2021
+
+function CamAnimCb()
+	cam_anim_active = false
+end
+
+
+local ANIM_TYPE_ORDINAL = 0
+local ANIM_TYPE_DROP_ANIMATOR = 1
+local ANIM_TYPE_RISKY_ANIMATOR = 2
+local ANIM_TYPE_STAMINAHIT_ANIMATOR = 3
+
+
+local last_cam_anim_type = ANIM_TYPE_ORDINAL
+
+-- 1. DISABLE CAMERA JIRK AND LOCKS
+-- Forces cam_anim_active to false so the player's camera is never locked by Burer's abilities.
+function HitAnim(anim_type, need_bloodscreen)
+	cam_anim_active = false 
+	if (need_bloodscreen) then 
+		-- Optional blood screen effect disabled for better visibility during combat
+		-- gunsl_bloodscreen.ForceHitScreen()
+	end
+end
+
+function on_gravi_attack_when_burer_see_actor(junk, junk)
+end
+
+function on_gravi_attack_unconditional(junk, junk)
+end
+
+function on_gravi_attack_actor_hit(hunk, junk)
+	HitAnim(ANIM_TYPE_ORDINAL, false)
+end
+
+function on_close_antiknife_prepare(junk, junk)
+	HitAnim(ANIM_TYPE_ORDINAL, false)
+end
+
+function on_close_antiknife(junk, junk)
+	HitAnim(ANIM_TYPE_ORDINAL, false)
+end
+
+-- 2. PREVENT WEAPON DISARM / DROPPING
+-- Disables the scripted animations that force weapons out of the player's hands.
+function on_drop_animator(junk, burer_id)
+	HitAnim(ANIM_TYPE_DROP_ANIMATOR, false)
+end
+
+function on_stamina_hit_nodrop(junk, burer_id)
+	HitAnim(ANIM_TYPE_STAMINAHIT_ANIMATOR, false)
+end
+
+function on_risky_under_aim(junk, burer_id)
+	return true
+end
+
+-- 3. PERMANENTLY DISABLE THE BLUE TELEKINETIC SHIELD
+-- By always returning 'true', the engine is forced to keep the Burer's shield permanently turned off.
+function need_disable_shield(junk, burer_id)
+	return true 
+end
+
+-- 4. RESTRICT TELEKINESIS ON PLAYER WEAPONS AND SECRETS
+-- Prevents the Burer from picking up and throwing dropped weapons or quest-related stash items.
+function can_tele_object(junk, objectid, junk)
+	local result = true
+	local o = level.object_by_id(objectid)
+	if (db.actor~=nil) and (o ~= nil) then
+		-- If the object is a weapon (starts with wpn_), strictly block telekinesis
+		if (string.sub(o:section(), 1, 4) == "wpn_") then
+			return false
+		elseif treasure_manager.get_treasure_manager():is_secret_item(objectid) then
+			return false
+		end
+	end
+	
+	return result
+end
+
+-- 5. DISABLE ANTI-AIM ATTACK
+-- Prevents the Burer from breaking your aim/crosshair focus.
+function can_start_antiaim(junk, burer_id)
+	return false 
+end
